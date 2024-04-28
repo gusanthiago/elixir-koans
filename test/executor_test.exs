@@ -7,8 +7,8 @@ defmodule ExecuteTest do
 
   test "stops at the first failing koan" do
     {:failed, %{file: file, line: line}, SampleKoan, _name} = Execute.run_module(SampleKoan)
-    assert file == 'test/support/sample_koan.ex'
-    assert line == 8
+    assert file == ~c"test/support/sample_koan.ex"
+    assert line == 9
   end
 
   test "can access intro" do

@@ -1,4 +1,5 @@
 defmodule Lists do
+  @moduledoc false
   use Koans
 
   @intro "Lists"
@@ -16,7 +17,7 @@ defmodule Lists do
   end
 
   koan "Things can evolve" do
-    assert [1, 2, 3] -- [3] == [1,2]
+    assert [1, 2, 3] -- [3] == [1, 2]
   end
 
   koan "Evolution can have different forms" do
@@ -28,7 +29,7 @@ defmodule Lists do
   end
 
   koan "Replication is also possible" do
-    assert List.duplicate("life", 3) == ["life","life", "life"]
+    assert List.duplicate("life", 3) == ["life", "life", "life"]
   end
 
   koan "Sometimes leveling the playing field is desired" do
@@ -36,7 +37,7 @@ defmodule Lists do
   end
 
   koan "Order can also be specified for new members" do
-    assert List.insert_at([1, 2, 3], 1, 4) == [1, 4,2, 3]
+    assert List.insert_at([1, 2, 3], 1, 4) == [1, 4, 2, 3]
   end
 
   koan "We can replace things at specified positions" do

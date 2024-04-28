@@ -1,4 +1,5 @@
 defmodule Atoms do
+  @moduledoc false
   use Koans
 
   @intro "Atoms"
@@ -11,12 +12,12 @@ defmodule Atoms do
   koan "It is surprising to find out that booleans are atoms" do
     assert is_atom(true) == true
     assert is_boolean(false) == true
-    assert true == :true
-    assert false == :false
+    assert true == true
+    assert false == false
   end
 
   koan "Like booleans, the nil value is also an atom" do
     assert is_atom(nil) == true
-    assert nil == :nil
+    assert nil == nil
   end
 end

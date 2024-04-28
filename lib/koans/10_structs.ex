@@ -1,9 +1,11 @@
 defmodule Structs do
+  @moduledoc false
   use Koans
 
   @intro "Structs"
 
   defmodule Person do
+    @moduledoc false
     defstruct [:name, :age]
   end
 
@@ -35,10 +37,12 @@ defmodule Structs do
   end
 
   defmodule Plane do
+    @moduledoc false
     defstruct passengers: 0, maker: :boeing
   end
 
   defmodule Airline do
+    @moduledoc false
     defstruct plane: %Plane{}, name: "Southwest"
   end
 
@@ -57,6 +61,10 @@ defmodule Structs do
 
   koan "Use the put_in macro with atoms to replace a nested value in a non-struct" do
     airline = %{plane: %{maker: :boeing}, name: "Southwest"}
-    assert put_in(airline[:plane][:maker], :cessna) == %{plane: %{maker: :cessna}, name: "Southwest"}
+
+    assert put_in(airline[:plane][:maker], :cessna) == %{
+             plane: %{maker: :cessna},
+             name: "Southwest"
+           }
   end
 end

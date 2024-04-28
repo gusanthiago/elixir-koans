@@ -1,8 +1,9 @@
 defmodule Display do
+  @moduledoc false
   use GenServer
 
   alias IO.ANSI
-  alias Display.{ProgressBar, Intro, Failure, Notifications}
+  alias Display.{Failure, Intro, Notifications, ProgressBar}
 
   def start_link do
     GenServer.start_link(__MODULE__, %{clear_screen: true}, name: __MODULE__)
@@ -20,15 +21,14 @@ defmodule Display do
     {:noreply, %{state | clear_screen: false}}
   end
 
-  def handle_cast(:clear_screen, state = %{clear_screen: true}) do
-    IO.puts(ANSI.clear())
-    IO.puts(ANSI.home())
+  def handle_call(:clear_screen, _from, %{clear_screen: true} = state) do
+    (ANSI.clear() <> ANSI.home()) |> IO.puts()
 
-    {:noreply, state}
+    {:reply, :ok, state}
   end
 
-  def handle_cast(:clear_screen, state) do
-    {:noreply, state}
+  def handle_call(:clear_screen, _from, state) do
+    {:reply, :ok, state}
   end
 
   def invalid_koan(koan, modules) do
@@ -52,15 +52,18 @@ defmodule Display do
   end
 
   def clear_screen do
-    GenServer.cast(__MODULE__, :clear_screen)
+    GenServer.call(__MODULE__, :clear_screen)
   end
 
   defp format(failure, module, name) do
+    progress_bar = ProgressBar.progress_bar(Tracker.summarize())
+    progress_bar_underline = String.duplicate("-", String.length(progress_bar))
+
     """
     #{Intro.intro(module, Tracker.visited())}
     Now meditate upon #{format_module(module)}
-    #{ProgressBar.progress_bar(Tracker.summarize())}
-    ----------------------------------------
+    #{progress_bar}
+    #{progress_bar_underline}
     #{name}
     #{Failure.format_failure(failure)}
     """

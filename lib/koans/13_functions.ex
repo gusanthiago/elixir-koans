@@ -1,4 +1,5 @@
 defmodule Functions do
+  @moduledoc false
   use Koans
 
   @intro "Functions"
@@ -35,7 +36,7 @@ defmodule Functions do
   end
 
   def sum_up(thing) when is_list(thing), do: Enum.sum(thing)
-  def sum_up(thing), do:  thing
+  def sum_up(thing), do: thing
 
   koan "Functions can have guard expressions" do
     assert sum_up([1, 2, 3]) == 6
@@ -104,8 +105,7 @@ defmodule Functions do
     result =
       "full-name"
       |> String.split("-")
-      |> Enum.map(&String.capitalize/1)
-      |> Enum.join(" ")
+      |> Enum.map_join(" ", &String.capitalize/1)
 
     assert result == "Full Name"
   end
